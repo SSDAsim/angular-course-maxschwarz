@@ -152,3 +152,18 @@ export class UserComponent {
 
 Majority of the projects does not use signals yet. they mostly use @Input
 
+
+### 41. Outputting List Content Dynamically in Angular
+
+    <ul id="users">
+        @for (user of users; track user.id){
+        <li>
+            <app-user
+            [user]="user"
+            (select)="onSelectUser($event)"
+            />
+        </li>
+        }
+    </ul>
+
+The reason behind the `track user.id` is that the Angular wants to assign something unique to each element of the list, and the other thing is because of efficiency. For example, if there is change in list of items, the Angular won't have to generate the whole list again and again. So, that's the idea behind the track use.id 
