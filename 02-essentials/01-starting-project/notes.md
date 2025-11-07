@@ -70,5 +70,30 @@ By using Signal, Angular can implement UI change in a fine grained way. Angular 
 **Zone.js** -> notifies Angular about user events, expired timers etc. 
 **Singals** -> notify Angular about when a signal values changes. 
 
+### 30. Defining Component Inputs - Making Components Reusable
+
+You can pass the dynamic data to the component, for that define the property in the .ts file with decorator @Input which will be imported from core. And then access this property and set the value of this property with the component tag.
+
+```
+export class UserComponent {
+
+    @Input() avatar!: string;
+    @Input() name!: string;
+
+    // the '!' with property name is to tell typescript that we are going to set the value of this property from outside and that we know we have not initialized this property with any value.
+
+    // image path getter
+    get imagePath() {
+        return "assets/users/" + this.avatar;
+    }
+
+    // define a function that handles the event (the name of the function may start with 'on')
+    onClickUser() { }
+
+}
+```
+
+    <app-user [avatar]="users[1].avatar" [name]="users[1].name"/>
+
 
 
