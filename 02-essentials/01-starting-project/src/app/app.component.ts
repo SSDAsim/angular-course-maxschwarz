@@ -17,7 +17,8 @@ export class AppComponent {
 
   // since we are going to access the users in the app.component.html so define the property here.
   users = DUMMY_USERS;
-  selectedUserId = 'u1';
+  // selectedUserId = 'u1';
+  selectedUserId?: string;
 
   get getSelectedUser() {
     return this.users.find((user) => user.id === this.selectedUserId);
