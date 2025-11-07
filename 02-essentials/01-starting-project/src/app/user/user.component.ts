@@ -7,9 +7,9 @@ import { Component, EventEmitter, Input, Output, output} from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required: true}) id!: string;
-  @Input({required: true}) avatar!: string;
-  @Input({required: true}) name!: string; 
+  @Input({required: true}) id?: string;
+  @Input({required: true}) avatar?: string;
+  @Input({required: true}) name?: string; 
   // it is better if you declare the type of data you are expecting
   @Output() select = new EventEmitter<string>();
 

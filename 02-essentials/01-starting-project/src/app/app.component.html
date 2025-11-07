@@ -44,5 +44,5 @@
     </li>
   </ul>
 
-  <app-tasks [name]="getSelectedUser.name" />
+  <app-tasks [name]="getSelectedUser ? getSelectedUser.name : ''" />
 </main>
