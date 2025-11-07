@@ -9,15 +9,9 @@ import { Component, EventEmitter, Input, Output, output} from '@angular/core';
 export class UserComponent {
   @Input({required: true}) id!: string;
   @Input({required: true}) avatar!: string;
-  @Input({required: true}) name!: string;
-
-  // define a custom event to output any component and it must be assigned a new instance of EventEmitter
-  // @Output() select = new EventEmitter;
-
-  // new approach and it will work same as like @Output() 
-  select = output<string>();  
-  
-  // on any event emit some value in this eventEmitter
+  @Input({required: true}) name!: string; 
+  // it is better if you declare the type of data you are expecting
+  @Output() select = new EventEmitter<string>();
 
   // image path getter
   get imagePath() {
