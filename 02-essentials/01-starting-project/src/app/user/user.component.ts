@@ -7,20 +7,27 @@ import { Component, EventEmitter, Input, Output, output} from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required: true}) id?: string;
-  @Input({required: true}) avatar?: string;
-  @Input({required: true}) name?: string; 
-  // it is better if you declare the type of data you are expecting
+  // @Input({required: true}) id?: string;
+  // @Input({required: true}) avatar?: string;
+  // @Input({required: true}) name?: string; 
+
+  // instead of above three inputs, you can take just only one user object 
+  @Input({required: true}) user!: {
+    id: string, 
+    name: string,
+    avatar: string
+  };
+
   @Output() select = new EventEmitter<string>();
 
   // image path getter
   get imagePath() {
-    return "assets/users/" + this.avatar;
+    return "assets/users/" + this.user.avatar;
   }
 
   // define a function that handles the event (the name of the function may start with 'on')
   onClickUser() {
-    this.select.emit(this.id)
+    this.select.emit(this.user.id)
    }
 
 }
