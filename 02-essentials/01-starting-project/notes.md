@@ -167,3 +167,59 @@ Majority of the projects does not use signals yet. they mostly use @Input
     </ul>
 
 The reason behind the `track user.id` is that the Angular wants to assign something unique to each element of the list, and the other thing is because of efficiency. For example, if there is change in list of items, the Angular won't have to generate the whole list again and again. So, that's the idea behind the track use.id 
+
+### 43. Legacy Angular: Using ngFor & ngIf
+
+``` 
+Newer version:
+
+<ul id="users">
+    @for (user of users; track user.id){
+      <li>
+        <app-user
+          [user]="user"
+          (select)="onSelectUser($event)"
+        />
+      </li>
+    }
+  </ul>
+```
+
+```
+Legacy with *ngFor:
+
+<ul id="users">
+      <li *ngFor="let user of users">
+        <app-user
+          [user]="user"
+          (select)="onSelectUser($event)"
+        />
+      </li>
+  </ul>
+```
+
+`*ngFor` is type of **Structual Directive** which is an enhancement that is added to elements to change those elements or change the DOM where those elements are used.
+
+And now for `@if` is `ngIf`
+
+```
+Newer version:
+@if(getSelectedUser){
+    <app-tasks [name]="getSelectedUser.name" />
+  } @else {
+    <p id="fallback">Ssssssssssss</p>
+  }
+```
+
+```
+Legacy:
+<app-tasks *ngIf="selectedUser; else anyfallback" [name]="selectedUser.name" />
+
+<!--- this is else case --->
+    <ng-template #anyfallback>
+      <p id="fallback">Ssssssssssss</p>
+    </ng-template>
+```
+`else` case is a bit complex.
+
+Note: Make sure to import the NgFor and NgIf in .ts file
