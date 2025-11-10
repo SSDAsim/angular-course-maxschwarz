@@ -8,10 +8,13 @@ import { TasksComponent } from './tasks/tasks.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [HeaderComponent, UserComponent, TasksComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  /* 
+  * standalone: true, 
+  * imports: [HeaderComponent, UserComponent, TasksComponent],
+  // a component declared in the module can not be a standalone component and can not import other components.
+  */
 })
 export class AppComponent {
 
