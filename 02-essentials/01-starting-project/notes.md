@@ -269,3 +269,16 @@ The idea behind **dependency injection** is that you do not create the instance 
 #### Using the Constructor for Dependency Injection   
 
 How do we tell Angular that we want such an instance? We add a constructor function to the class, which is a special method executed automatically when the class is instantiated. Angular executes this constructor when it instantiates the component used in a template.
+
+### 60. More Service Usage & Alternative Dependency Injection Mechanism
+
+- Approach 1 - Constructor method    
+```
+constructor(private tasksService: TasksService){}
+```
+
+- Approach 2 - inject() method  
+*// inject a dependency and initiate an instance with inject() and not the constructor approach*
+```
+private tasksService = inject(TasksService);
+```

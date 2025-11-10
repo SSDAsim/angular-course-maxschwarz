@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type NewTaskData } from '../task/task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -16,22 +17,27 @@ export class NewTaskComponent {
   enteredDate = '';
   // why these all are string ? cause inputs in HTML always yield a string
 
-  // event to emit <form> data which will be stored in dummyTasks[]
-  @Output() add = new EventEmitter<NewTaskData>();
+  // input userId
+  @Input({required: true}) userId!: string;
 
+  // inject a dependency and initiate an instance with inject() and not the constructor approach
+  private tasksService = inject(TasksService);
 
-  @Output() cancel = new EventEmitter<void>();
+  @Output() close = new EventEmitter<void>();
 
   onCancel(){
-    this.cancel.emit();
+    this.close.emit();
   }
 
   // prevent the default form submission (using FormsModule) and handle the logic here 
   onSubmit() {
-    this.add.emit({
+    this.tasksService.addTask({
       title: this.enteredTitle,
       summary: this.enteredSummary, 
       dueDate: this.enteredDate
-    });
+    }, 
+    this.userId
+    );
+    this.close.emit();
   }
 }

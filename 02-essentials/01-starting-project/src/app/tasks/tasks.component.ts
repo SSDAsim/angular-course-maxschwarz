@@ -17,7 +17,7 @@ export class TasksComponent {
   isAddingTask = false;
 
   // instantiate an instance of TasksService, this instance will be used to manipulate data in the TasksService 
-  // why do we have to instantiate it like this cause if we instantiate different instances, each instance will have his own data and the modification will be made to the data of that instance and not the actual data. (same concept as copy by reference and copy by value)
+  // why do we have to instantiate it like this cause if we instantiate different instances, each instance will have his own data and the modification will be made to the data of that instance and not the actual data. (same concept as copy by reference and copy by)
   constructor(private tasksService: TasksService){}
 
   get selectedUserTasks() {
@@ -33,15 +33,7 @@ export class TasksComponent {
     this.isAddingTask = true;
   }
   // on clicking 'Cancel', hide Add Task Modal
-  onCancelAddTask(){
+  onCloseAddTask(){
     this.isAddingTask = false;
   }
-
-  // store new tasks in the dummyTasks[]
-  onAddNewTask(taskData: NewTaskData) {
-    
-    // also close the add-task modal
-    this.isAddingTask = false;
-  }
-  // to add in the beginning of the array, use 'unshift()'
 }
