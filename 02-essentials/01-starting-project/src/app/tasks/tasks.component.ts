@@ -48,8 +48,12 @@ export class TasksComponent {
   onCompleteTask(id: string) {
       this.dummyTasks = this.dummyTasks.filter((task) => task.id != id);
   }
-
+  // on clicking 'Add Task', show Add Task Modal
   onStartAddTask(){
     this.isAddingTask = true;
+  }
+  // on clicking 'Cancel', hide Add Task Modal
+  onCancelAddTask(){
+    this.isAddingTask = false;
   }
 }

@@ -228,3 +228,11 @@ Note: Make sure to import the NgFor and NgIf in .ts file
 ### 43. More Component Communication: Deleting Tasks
 
 Flow of event, in `task.html` file, listen for the click event on the complete button, link a function `onCompleteTask()` to this click event and in this function, emit an output event. Then in the `tasks.html` file, listen for this new event and link that event to a function in `tasks.ts` file.
+
+### 52. Using Directives & Two-Way-Binding
+
+`[(ngModel)]` is a directive that supports **Two-Way Binding** and is added to the `<input>` element to enhance it's properties and to get the input.  
+It gives access to the value entered by the user in the input, and also *allows you to write data back to the input*. That is what **Two-Way Binding** means (listen to input but also output data, both with one syntax i.e. `[(ngModel)] = propToBind`).   
+Do not forget to import `FormsModule` from '@angular/forms';    
+You can track each keystroke of the user when he/she is inputting any value (live).   
+Inputs in HTML always yield a **string**.
