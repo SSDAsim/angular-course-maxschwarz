@@ -1,21 +1,8 @@
 import { Component, EventEmitter, Input, Output, output} from '@angular/core';
 
-// define you own object type 
-// 1. type
-/*
-type User = {
-  id: string, 
-  name: string,
-  avatar: string
-};
-*/
-
-// 2. Interface 
-interface User {
-  id: string, 
-  name: string,
-  avatar: string  
-};
+// since the type defnintion can be long, store data model in a separate file and then import in this file.
+// indicate that this is data model file by writing 'type' before it 
+import {type User} from './user.model';
 
 @Component({
   selector: 'app-user',
