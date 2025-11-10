@@ -248,3 +248,12 @@ card.component.html
 </div>
 ```  
 `<ng-content>` will act as a placeholder and it will be replaced by the markup wrapped by this component.
+
+### 57. Transforming Template Data with Pipes
+
+Pipes are *output transformers*. They transform the output in the templates to improve how data is displayed 
+
+  <time>{{ task.dueDate | date:'fullDate'}}</time>
+
+`:fullDate` is for the configuration purposes and you also need to import `*DatePipe*` from `'@angular/common'`.
+
