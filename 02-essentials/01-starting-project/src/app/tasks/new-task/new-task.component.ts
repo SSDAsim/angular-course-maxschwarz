@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,9 +10,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class NewTaskComponent {
   // properties to implement Two Way Binding - listen to the input or write data back to the input
-  enteredTitle = signal('');
-  enteredSummary = signal('');
-  enteredDate = signal('');
+  enteredTitle = '';
+  enteredSummary = '';
+  enteredDate = '';
 
   // why these all are string ? cause inputs in HTML always yield a string
 
@@ -20,5 +20,10 @@ export class NewTaskComponent {
 
   onCancel(){
     this.cancel.emit();
+  }
+
+  // prevent the default form submission (using FormsModule) and handle the logic here 
+  onSubmit() {
+    
   }
 }
