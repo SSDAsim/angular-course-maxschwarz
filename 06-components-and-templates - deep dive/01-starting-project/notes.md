@@ -333,5 +333,30 @@ You are telling the angular that the code after []= and inside `""` should be ev
     // if you need to assign a simple string, you should not use property binding.
 
 
+### 104. A Possible, But Not Ideal Way Of Extending Built-in Elements
+
+One issue with components is if you make a *button* component which contains markup of an `<button>`, when rendering this component, in the DOM, there will be one tag of your component and then under that, there will be markup which the component contains i.e. the HTML `<button>`. So our DOM contains a number of redunant tags of component names. So there might be better way of exteniding buil-in Elements such as `<button>`.
+
+### 105. Extending Built-in Elements with Custom Components via Attribute Selectors
+
+This is used usually to extend the funtionality of the built-in element.
+
+Selectors are not only limited to app selectors. You can also make for example **Attribute Selectors** and whenever you give that attribute to any element, the angular will take control of it. There can be *class selector* too depending upon your needs. Let's see and example of the *Attribute Selector* which we are going to use to extend the funtionality of the built-in element `<button>` in our case.
+
+    @Component({
+      selector: 'button[appButton]',
+      standalone: true,
+      imports: [],
+      templateUrl: './button.component.html',
+      styleUrl: './button.component.css'
+    })
+
+In the above code, we are telling angular that whichever `<button>` has the attribute `appButton`, angular should take control of that.   
+Similarly, in order to target all the `<button>` which has `button` class, the selector will be as    
+
+    selector: 'button.button',
+
+
+
 
 
