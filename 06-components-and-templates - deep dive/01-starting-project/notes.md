@@ -300,4 +300,38 @@ Install the `Angular Dev Tools` extenstion from `https://angular.dev/tools/devto
 
 **Angular DevTools** is a browser extension that provides debugging and profiling capabilities for Angular applications.
 
+### 101. Property Binding 
+
+#### Difference of @Input and input()
+
+note: with `@Input()` -> you access the property as in component markup as `img.src`
+while with the `input()` -> since it is a signal now, so you access the property as `img().src`
+
+    export class DashboardItemComponent {
+      // define an object for image src and image alt text
+      // @Input({required: true}) img!: {src: string; altText: string};
+      // @Input({required: true}) headingText!: string;
+
+      // note: with @Input() -> you access the property as in component markup as img.src
+      // while with the input() -> since it is a signal now, so you access the property as img().src
+
+      // alternatively
+      img = input.required<{src: string; altText: string}>();
+      headingText = input.required<string>();
+    }
+
+Whenever you bind the property in '[]' like 
+    <app-dashboard-item [img]="{ src:'list.png', altText:'A list of items' }" [headingText]="Support Tickets">
+
+You are telling the angular that the code after []= and inside `""` should be evaluated as *TypeScript* code. Angular would read the content inside `""` as TypeScript variable and tries to assign any value to that. In order to avoid that you can use `''` inside double quotes as 
+
+    <app-dashboard-item [headingText]="'Support Tickets'">
+
+    // Alternatively
+    <app-dashboard-item headingText="Support Tickets">
+
+    // if you need to assign a simple string, you should not use property binding.
+
+
+
 
