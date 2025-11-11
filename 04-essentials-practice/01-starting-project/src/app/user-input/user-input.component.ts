@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import type { InvestmentInput } from '../investment-input.model';
 
 @Component({
   selector: 'app-user-input',
@@ -11,12 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class UserInputComponent {
   
   // we want to pass these values to the calculate function in the parent component i.e. AppComponent. For that, we are going to output an event 
-  @Output() calculate = new EventEmitter<{
-    initialInvestment: number,
-    expectedReturn: number,
-    annualInvestment: number,
-    duration: number,
-  }>();
+  @Output() calculate = new EventEmitter<InvestmentInput>();
 
   initialInvestment = '0';
   annualInvestment = '0';
