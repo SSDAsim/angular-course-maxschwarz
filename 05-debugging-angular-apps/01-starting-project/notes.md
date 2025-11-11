@@ -298,4 +298,6 @@ Flow: To pass data from child to parent, use an event emitter and pass the data 
 
 Install the `Angular Dev Tools` extenstion from `https://angular.dev/tools/devtools` and add to the chrome, It will add another tab **Angular** to the developer tools in the chrome browser where you can debug your code and also measure the performance of your application etc. 
 
+**Angular DevTools** is a browser extension that provides debugging and profiling capabilities for Angular applications.
+
 
