@@ -402,4 +402,24 @@ note the `class="control"` , but we have to give all the component tags this cla
     })
 
 
+### 115. When (Not) To Rely On Host Elements
 
+It happens often that in order to apply styles to a component, we enclose the component markup inside a wrapper and then give the wrapper an id or class to target that element in CSS styles. However this cause some redundancy because we can target our component tag e.g. for `ControlComponent` we can target `<app-control>` in CSS Styles using `:host` rather than targetting a wrapper. This approach is alternative to assigning class to the component tag from inside the component class. 
+
+```html
+  <p>Last 7 days</p>
+
+  <div id="chart">
+      @for (dataPoint of dummyTrafficData; track dataPoint.id) {
+      <div [style.height]="(dataPoint.value / maxTraffic) * 100 + '%'"></div>
+      }
+  </div>
+  <!-- You can see there is no wrapper around the markup and the wrapper styles will be applied targetting :host -->
+```
+
+```css
+  :host {
+    display: block;
+    width: 15rem;
+  }
+```
