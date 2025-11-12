@@ -32,7 +32,7 @@ export class ControlComponent {
   /* inside the paranthesis, give the name of the element or template variable to hold control of */
 
   /* signal alternative */
-  private control = contentChild<HTMLInputElement | HTMLTextAreaElement>('input');
+  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
 
   onClick() {
     console.log('Clicked!');

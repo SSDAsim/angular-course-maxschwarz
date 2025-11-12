@@ -680,3 +680,18 @@ onClick() {
 }
 ```
 
+### 134. A Closer Look at Decorator-based Queries & Lifecycle Hooks
+
+#### Purpose of AfterViewInit
+
+The idea behind this hook is that within it, you are guaranteed to have access to the elements that have been selected with `ViewChild`, unless you specified a selector that cannot be found. You are guaranteed that the template has been initialized and that **Angular** is able to select elements in there.
+
+On the other hand, if you also implement the `OnInit` interface and add the `ngOnInit` method, it is not guaranteed that this element exists yet. If you log inside ngOnInit and try to access the native element, you will see that it is undefined.
+
+#### Purpose of AfterContentInit
+
+`AfterContentInit` and add the `ngAfterContentInit` method, I can safely access content that has been projected into the component, assuming I have a correct selector.
+
+This applies whether you are using the *ContentChild function* or the *ContentChild decorator*.
+
+
