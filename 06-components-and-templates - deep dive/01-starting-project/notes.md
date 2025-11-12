@@ -613,3 +613,35 @@ However, if you put the Template Variable on the *Angular Component*, angular ha
 
 <!-- since button is no longer an HTML Element, rather it is an Angular Componen. So, in Template Variable we get the instance of Component and not the HTML Element. -->
 ```
+
+
+### 131. Getting Access to Template Elements via ViewChild
+
+Previously, in the view file i.e. Template file of the component we had to pass the template variabled to the function we bound to the event. However there is an alternate and easy way using `@ViewChild`. It allows you to access the template variable from the template or view file in your component class and you do not need to pass those variables to any event binder in the template file. 
+
+Component View/Template file:
+```html
+<form (ngSubmit)="onSubmit(titleInput.value, textInput.value)" #form>
+  <app-control label="Title">
+    <input name="title" id="title" #titleInput />
+  </app-control>
+```
+Component Class:
+```typescript
+  export class NewTicketComponent {
+
+  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
+  // in the paranthesis, you need to pass the name of the template variable assigned in the template file.
+
+    // capute the form input value(s) using Template Variables
+  onSubmit(titleElement: string, textElement: string) {
+    console.dir('TITLE: ' + titleElement);
+    console.dir('TEXT: ' + textElement);
+
+    // form.reset(); // if you pass the form element from the event binder in the template file
+
+    this.form?.nativeElement.reset();
+  }
+}
+```
+
