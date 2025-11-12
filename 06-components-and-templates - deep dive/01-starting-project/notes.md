@@ -594,3 +594,22 @@ export class NewTicketComponent {
   }
 }
 ```
+
+
+### 130. Template Variables & Component Instances
+
+If you put **Tempalte Variable** on an HTML element, you get the instance of HTMLElement. For example if template variable is on the `<textarea>`, then you get the instance of HTML Textarea component. 
+```html
+<textarea name="request" id="request" rows="3" #textInput></textarea>
+```
+
+However, if you put the Template Variable on the *Angular Component*, angular has taken control of it and you no longer gets the instance of HTML Element, rather you get the instance of **Angular Component**. 
+
+```html
+<button appButton #btn>
+  Submit
+  <span ngProjectAs="icon">⌲</span>
+</button>
+
+<!-- since button is no longer an HTML Element, rather it is an Angular Componen. So, in Template Variable we get the instance of Component and not the HTML Element. -->
+```
