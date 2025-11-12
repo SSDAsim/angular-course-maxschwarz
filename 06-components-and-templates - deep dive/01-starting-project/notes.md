@@ -469,3 +469,29 @@ Following are two ways of setting a host's (Component's) property and listen to 
 To access the host element programmatically, we inject `ElementRef` class. The ElementRef object provides a nativeElement property that references the actual DOM element.
 Direct manipulation of the DOM via ElementRef should be done cautiously; prefer data binding and template features for UI updates.
 Injection can be done via the inject function or constructor injection, both provided by Angular. 
+
+
+
+### 120. A Closer Look At Dynamic Inline Style Binding and CSS class Binding
+
+```html
+  <div [class]="{
+    status: true,
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unknown': currentStatus === 'unknown',
+  }"
+      [style]="{
+          fontSize: '64px',
+      }"
+  >
+  </div>
+
+  <!-- Or this will also work [style.fontSize]="'64 px'" -->
+  <!-- note that the value inside the double quote "" will be evaluated as typescript code so enclose it in single quotes '' -->
+```
+
+Another example: 
+```html
+  <div [style.height]="(dataPoint.value / maxTraffic) * 100 + '%'"></div>
+```
