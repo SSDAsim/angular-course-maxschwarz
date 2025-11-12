@@ -517,3 +517,10 @@ ngOnInit method will be executed by Angular whenever Angular has initialized thi
 The ngOnInit method runs after Angular has initialized all the components inputs with their initial values. A component's ngOnInit runs exactly once.
 
 This step happens before the component's own template is initialized. This means that you can update the component's state based on its initial input values.
+
+### 125. Component Cleanup with ngOnDestroy
+
+In our component, we have a time interval function that we want to clear when our components is destroyed. To catch the point when the component will be destroyed, we use one of *Component Lifecycle Hook* i.e. `ngOnDestroy`.   
+
+#### How to clear timeout interval?  
+`setInterval()` return a **NodeJS.Timeout**. we can make a private class property that will store the return of *setInterval()* and when the component will be destroyed, we will clear this time interval function.
