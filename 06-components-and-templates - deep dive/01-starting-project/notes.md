@@ -645,3 +645,38 @@ Component Class:
 }
 ```
 
+### 133. ViewChild vs ContentChild
+
+Using `@ViewChild()` or `viewChild()` we targetted the elements or components that are part of the component view or template file. However, in case of `<ng-content>` which is actually a *placeholder* and used to **project content in the component class** and the projected content is also not part of the component view or template file.   
+For `<ng-content>`, we use the @ContentChild() to get hold of the **Template Variables** e.g. *input* and *textarea* of the `<ng-content select="input, textarea" />` inside the component class.
+
+```html
+<!-- component view -->
+<label>{{ label() }}</label>
+<ng-content select="input, textarea" />
+```
+
+```html
+<!-- component being used -->
+<app-control label="Title">
+  <input name="title" id="title" #titleInput #input />
+</app-control>
+<app-control label="Request">
+  <textarea name="request" id="request" rows="3" #textInput #input ></textarea>
+</app-control>
+```
+
+```typescript
+// inside Component class
+
+// @ContentChild('input') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+/* inside the paranthesis, give the name of the element or template variable to hold control of */
+
+/* signal alternative */
+private control = contentChild<HTMLInputElement | HTMLTextAreaElement>('input');
+
+onClick() {
+  console.log(this.control());
+}
+```
+
