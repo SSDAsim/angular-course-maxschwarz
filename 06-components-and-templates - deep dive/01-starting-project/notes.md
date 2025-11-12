@@ -694,4 +694,27 @@ On the other hand, if you also implement the `OnInit` interface and add the `ngO
 
 This applies whether you are using the *ContentChild function* or the *ContentChild decorator*.
 
+### 136. The afterRender and afterNextRender Lifecycle Functions
 
+The purpose of both hooks is to *allow user to execute some function while anything changes in whole website. The hooks we had discussed previously were tracking the changes on the component level.   
+`afterRender:` executes functions whenever or wherever anything changes inside the app. *anything*   
+
+`afterNextRender` : executes only when there is next change in the app.  
+
+They were introduced with Angular 16. 
+
+```typescript
+export class ControlComponent {
+
+  constructor() {
+
+    afterNextRender(() => {
+      console.log('After Next Render');
+    });
+
+    afterRender(() => {
+      console.log("After Render");
+    });
+  }
+}
+```

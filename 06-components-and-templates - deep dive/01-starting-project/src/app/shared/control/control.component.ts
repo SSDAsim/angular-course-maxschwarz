@@ -1,4 +1,4 @@
-import { Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
+import { afterNextRender, afterRender, Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -20,6 +20,17 @@ export class ControlComponent {
   // @HostListener('click') onClick() {
   //   console.log('Clicked!');
   // } 
+
+  constructor() {
+
+    afterNextRender(() => {
+      console.log('After Next Render');
+    });
+
+    afterRender(() => {
+      console.log("After Render");
+    });
+  }
 
   // access the host programmatically
   private el = inject(ElementRef);
