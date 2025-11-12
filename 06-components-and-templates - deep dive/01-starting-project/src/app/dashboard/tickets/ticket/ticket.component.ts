@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Ticket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket',
@@ -9,4 +10,6 @@ import { Component } from '@angular/core';
 })
 export class TicketComponent {
 
+  // take a single ticket as input
+  @Input({required: true}) ticket?: Ticket;
 }
