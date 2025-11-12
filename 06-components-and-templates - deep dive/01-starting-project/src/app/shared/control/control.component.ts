@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, input, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -9,7 +9,7 @@ import { Component, HostBinding, HostListener, input, ViewEncapsulation } from '
   encapsulation: ViewEncapsulation.None, //disable the encapsulation to apply the component styles globally
   host: {
     class: 'control', // set property of the host
-    // '(click)': 'onClick()', // listen to the click event on the component
+    '(click)': 'onClick()', // listen to the click event on the component
   },
 })
 export class ControlComponent {
@@ -21,9 +21,15 @@ export class ControlComponent {
   //   console.log('Clicked!');
   // } 
 
+  // access the host programmatically
+  private el = inject(ElementRef);
+  // 'el' will contain the information about the host <app-control /> in the DOM and you can manipulate that in this class. 
+  // since 'el' is a private property so it can not be accessed outside of the class.
+
   label = input.required<string>();
 
   onClick() {
     console.log('Clicked!');
+    console.log(this.el);
   }
 }

@@ -463,3 +463,9 @@ Following are two ways of setting a host's (Component's) property and listen to 
     // }
   }
 ```
+
+### 117. Accessing Host Elements Programmatically
+
+To access the host element programmatically, we inject `ElementRef` class. The ElementRef object provides a nativeElement property that references the actual DOM element.
+Direct manipulation of the DOM via ElementRef should be done cautiously; prefer data binding and template features for UI updates.
+Injection can be done via the inject function or constructor injection, both provided by Angular. 
