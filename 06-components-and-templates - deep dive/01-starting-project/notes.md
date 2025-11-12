@@ -524,3 +524,50 @@ In our component, we have a time interval function that we want to clear when ou
 
 #### How to clear timeout interval?  
 `setInterval()` return a **NodeJS.Timeout**. we can make a private class property that will store the return of *setInterval()* and when the component will be destroyed, we will clear this time interval function.
+
+
+### 126. Component Cleanup with DestroyRef
+
+Elegant alternative of `ngOnDestroy()`, with `DestroyRef` we can add listener that will be triggered when the component is about to be destroyed. Using this, we can add such listeners at number of places inside our class as compared to only one time using `ngOnDestroy()`.    
+**Angular** allows you to inject a special value into your components known as a `DestroyRef`. This can be injected either via the constructor or by using the inject function. The type to inject is DestroyRef, which is imported from *@angular/core*.
+
+By injecting DestroyRef and storing it in a property, you can set up a listener that *triggers a function whenever the component is about to be destroyed.* This listener serves as an alternative to the ngOnDestroy method.
+
+
+```typescript
+  export class ServerStatusComponent implements OnInit {
+    currentStatus: 'online' | 'offline' | 'unknown' = 'online';
+
+    // compnent cleanup using DestroyRef
+    private destroyRef = inject(DestroyRef);
+    // now we can listen to component destroy event and execute any function we want to execute when component is about to be destroyed.
+
+    constructor() {}
+    // keep your constructor clean and use for initializing values 
+
+    // for complex tasks, use 
+    ngOnInit() {
+      console.log('ON INIT');
+      const interval = setInterval(() => {
+        const rnd = Math.random(); // 0 - 0.9999999
+        
+        if(rnd < 0.5){
+          this.currentStatus = 'online';
+        } else if (rnd < 0.9) {
+          this.currentStatus = 'offline';
+        } else {
+          this.currentStatus = 'unknown';
+        }
+      }, 5000);
+
+      // add a listner here, to execute some code when the comonent is about to be destroyed. similary we can add such listener at some other place in our class. 
+      this.destroyRef.onDestroy(() => {
+        clearInterval(interval);
+      });
+    }
+
+    ngAfterViewInit(){
+      console.log("AFTER VIEW INIT");
+    }
+  }
+```

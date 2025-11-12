@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -10,9 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class ServerStatusComponent implements OnInit {
   currentStatus: 'online' | 'offline' | 'unknown' = 'online';
 
-  // property to store the return of setInterval()
-  // private interval?: NodeJS.Timeout;
-  private interval?: ReturnType<typeof setInterval>;
+  // compnent cleanup using DestroyRef
+  private destroyRef = inject(DestroyRef);
+  // now we can listen to component destroy event and execute any function we want to execute when component is about to be destroyed.
 
   constructor() {}
   // keep your constructor clean and use for initializing values 
@@ -20,7 +20,7 @@ export class ServerStatusComponent implements OnInit {
   // for complex tasks, use 
   ngOnInit() {
     console.log('ON INIT');
-    this.interval = setInterval(() => {
+    const interval = setInterval(() => {
       const rnd = Math.random(); // 0 - 0.9999999
       
       if(rnd < 0.5){
@@ -31,14 +31,14 @@ export class ServerStatusComponent implements OnInit {
         this.currentStatus = 'unknown';
       }
     }, 5000);
+
+    // add a listner here, to execute some code when the comonent is about to be destroyed. similary we can add such listener at some other place in our class. 
+    this.destroyRef.onDestroy(() => {
+      clearInterval(interval);
+    });
   }
 
   ngAfterViewInit(){
     console.log("AFTER VIEW INIT");
-  }
-
-  // when component is destroyed
-  ngOnDestroy() {
-    clearTimeout(this.interval);
   }
 }
