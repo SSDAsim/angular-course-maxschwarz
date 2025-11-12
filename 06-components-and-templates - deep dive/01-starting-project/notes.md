@@ -735,3 +735,5 @@ constructor() {
   });
 }
 ```
+
+The `effect` allows us to run code when signal value changes.
