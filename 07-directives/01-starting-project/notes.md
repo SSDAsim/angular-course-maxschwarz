@@ -748,3 +748,14 @@ The `effect` allows us to run code when signal value changes.
 ```
 
 Directives do not have a template while components are directives but with a template. 
+
+
+### 153. Analyzing a Built-in Structural Directive: ngIf
+
+Structural directives start with an asterisk "\*". Structural Directives change the DOM. In modern Angular, there are no built-in *structural directives* left anymore. We use `@if` in place of `*ngIf` and `@for` in place `*ngFor`.
+
+```html
+<p *ngIf="isAdmin()">Only admins should see</p>
+```
+
+
