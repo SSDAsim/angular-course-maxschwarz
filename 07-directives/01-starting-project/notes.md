@@ -806,3 +806,60 @@ queryParam = input('myapp', {alias: 'appSafeLink'});
 
 `effect()` encloses the code to run whenver some signal values changes. 
 
+
+### 159. Building a Custom Structural Directive
+
+`<ng-template>` is included in a template file and it allows us to do not show some content initially (when the page loads.) You can control when to show content that is enclosed inside this tag.   
+With `<ng-template>`, if you use any structual directive such as `ngIf`, you do not need to put `*` before it. `*` is just a syntactic sugar to add `<ng-template>` behind the scenes.
+```html
+<!-- approach 1 -->
+ <p *ngIf="....">........</p>
+
+
+<!-- approach 2 -->
+<ng-template ngIf="....">
+  <p>........</p>
+</ng-templat>
+```
+
+#### Three steps to build a custom structural directive 
+- HTML File (app.component.html in our case) 
+```html
+<!-- approach 1 -->
+<ng-template appAuth="admin">
+  <p>If you can see this, then you are an admin.</p>
+</ng-template>
+
+ <!-- approach 2 -->
+ <p *appAuth="'admin'">If you can see this, then you are an admin.</p>
+```
+
+- directive component class
+```typescript
+/* 
+  * if you have used the <ng-template> in the template file you need to delcare it here that you want to use that in the template
+  * Injecting a `TemplateRef` tells Angular that this directive i.e. `appAuth` will be used on an ng-template element and that we want to get hold of that template and implicitly also the content inside of that template. 
+  * By injecting the ViewContainerRef type or class , we get a reference to the place in the DOM where this template is being used
+  */
+  private templateRef = inject(TemplateRef);
+  private viewContainerRef = inject(ViewContainerRef);
+
+  /* 
+  * createEmbeddedView(this.templateRef) => tells Angular to render some new content into a certain place in the DOM.
+  => this function tells the angular to take markup inside the <ng-template> and render it where this directive (i.e. appAuth in our case) is used in the DOM 
+
+  * viewContainerRef.clear() => clears any embedded view that has been rendered.
+
+  */
+  constructor() {
+    /* run some code in effect() whenever a signal value changes */
+    effect(() => {
+      if(this.AuthService.activePermission() === this.userType()){
+        this.viewContainerRef.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainerRef.clear();
+      }
+    });
+```
+
+
