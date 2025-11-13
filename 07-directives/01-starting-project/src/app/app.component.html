@@ -5,7 +5,11 @@
 
   <app-auth />
 
-  <ng-template appAuth="admin">
+  <!-- <ng-template appAuth="admin">
     <p>If you can see this, then you are an admin.</p>
-  </ng-template>
+  </ng-template> -->
+
+  <p *appAuth="'admin'" class="protected-content admin">If you can see this, then you are an admin.</p>
+  <p *appAuth="'user'" class="protected-content unauthenticated">If you can see this, then you are a regular user.</p>
+  <p *appAuth="'guest'" class="protected-content authenticated">If you can see this, then you are a guest.</p>
 </main>
