@@ -759,3 +759,47 @@ Structural directives start with an asterisk "\*". Structural Directives change 
 ```
 
 
+### 156. Working with Inputs in Custom Directives
+
+Directive can take *input* and can also *output* just like the components.   
+**Typecasting** in Typescript. 
+```typescript
+  (<value> as <type>)
+  // example
+  const address = (event.target as HTMLAnchorElement).href
+```
+
+Using Alias for input name:
+- Approach 1
+```typscript
+@Directive({
+    selector: 'a[appSafeLink]', // target every anchor tag which has attribute 'appSafeLink
+    standalone: true,
+    host: {
+        '(click)': 'onConfirmLeavePage($event)', // listen to click event. coule do @HostListen
+    }
+})
+
+export class SafeLinkDirective {
+
+    // take query parameter as input
+    queryParam = input('myapp');
+}
+```
+Let's take input for this `queryParam`
+```html
+<a href="https://angular.dev" appSafeLink queryParam="myapp-docs-link">Angular Documentation</a>
+```
+
+- Approach 2
+Use the name of the attribute as the input storage:   
+```typescript
+queryParam = input('myapp', {alias: 'appSafeLink'});
+```
+
+```html
+<a href="https://angular.dev" appSafeLink="myapp-docs-link">Angular Documentation</a>
+<!-- use alias to get the input rather than the property name -->
+```
+
+
