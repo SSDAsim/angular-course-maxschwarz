@@ -802,4 +802,7 @@ queryParam = input('myapp', {alias: 'appSafeLink'});
 <!-- use alias to get the input rather than the property name -->
 ```
 
+### 158. Building Another Directive
+
+`effect()` encloses the code to run whenver some signal values changes. 
 
