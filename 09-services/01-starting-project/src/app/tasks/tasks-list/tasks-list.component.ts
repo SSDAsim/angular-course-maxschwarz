@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 
 import { TaskItemComponent } from './task-item/task-item.component';
 import { TasksService } from '../tasks.service';
+import {TASK_STATUS_OPTIONS, TaskStatusOptionsProvider} from '../task.model';
 
 @Component({
   selector: 'app-tasks-list',
@@ -9,20 +10,21 @@ import { TasksService } from '../tasks.service';
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css',
   imports: [TaskItemComponent],
+  providers: [TaskStatusOptionsProvider]
+  /* TASK_STATUS_OPTIONS is not a class rather a simple array so we used 'useValue:' and not 'useClass' */
 })
 export class TasksListComponent {
   private tasksService = inject(TasksService);
 
   selectedFilter = signal<string>('all');
 
-  // tasks = this.tasksService.tasks;
-  /* the above will be a writeable signal, however in some cases we want the logic to change such signal should reside only in the service and the signal should be read-only */
-  /* the component should only read the service data and should not manipulate the service data, that's why the signal should be (not ideally but in some cases) read-only and should not be writeable */
+  /* inject non-service value */
+  taskStatusOption = inject(TASK_STATUS_OPTIONS);
+   /*
+   * inside paranthesis, there is Dependency Injection token (unique identifier for dependency) 
+   * for a service class, usually the class name serves as the Dependency Injection Token 
+   */
 
-  // tasks = this.tasksService.allTasks; // get read-only signal from service
-
-  /* computed() returns a computed() signal who is dependent on other signals and which will be re-computed whenever the dependent signals change. */
-  /* why computed() ? whenever the value of the related signals (e.g. filter or value of the this.selectedFilter() or value of allTasks()), compute will recompute */
   
   tasks = computed(() => {
     switch(this.selectedFilter()){

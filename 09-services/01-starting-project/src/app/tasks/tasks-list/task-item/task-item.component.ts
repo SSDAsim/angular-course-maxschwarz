@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Task, TaskStatus } from '../../task.model';
+import { Task, TASK_STATUS_OPTIONS, TaskStatus } from '../../task.model';
 import { TasksService } from '../../tasks.service';
 
 @Component({
@@ -14,6 +14,9 @@ import { TasksService } from '../../tasks.service';
 export class TaskItemComponent {
   // inject TasksService dependency to update the task status
   private tasksService = inject(TasksService);
+
+   /* inject non-service value */
+    taskStatusOption = inject(TASK_STATUS_OPTIONS);
 
   task = input.required<Task>();
   taskStatus = computed(() => {
