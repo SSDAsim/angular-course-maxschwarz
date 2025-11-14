@@ -969,4 +969,7 @@ constructor (tService: TasksService) {
 or shorter version:
 ```typescript
 constructor (private tasksService: TasksService) {}
+
+/* 3rd alternative using inject() */
+private tasksService = inject(TasksService);
 ```
