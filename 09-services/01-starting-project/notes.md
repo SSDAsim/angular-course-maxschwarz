@@ -984,3 +984,25 @@ private tasksService = inject(TasksService);
 - Components first request dependencies from the ElementInjector, then move up the hierarchy if not found.
 - The NullInjector serves as a fallback to throw errors when no provider is found.
 
+
+### 182. Multiple Ways of Providing a Service
+
+#### Using Providers[]
+
+A `provider` is a piece of information that lets Angular know that a certain value should be injectable. This array is provided where the application is bootstrapped i.ee (main.ts) file
+
+```typescript
+import { TasksService } from './app/tasks/tasks.service';
+
+bootstrapApplication(AppComponent, {
+    providers: [TasksService]
+}).catch((err) => console.error(err));  
+```
+
+Important takeaway with the above approach is the code belongs to `TasksService` will always be included no matter if it is being used or not. So you probably go with the previous approach.
+```typescript
+@Injectable({
+  providedIn: 'root',
+})
+// this approach may lead to better code optimization and performance
+```
