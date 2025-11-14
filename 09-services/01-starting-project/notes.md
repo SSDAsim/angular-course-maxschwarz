@@ -973,3 +973,14 @@ constructor (private tasksService: TasksService) {}
 /* 3rd alternative using inject() */
 private tasksService = inject(TasksService);
 ```
+
+
+### 181. Angular Has Multiple Injectors!
+
+ `Component` => **ElementInjector** => **Application root EnvironmentInjector** => **ModuleInjector** => **PlatformInjector** => `NullInjector`
+
+- Angular uses a hierarchy of injectors to manage dependency injection.
+- The Injectable decorator with providedIn: 'root' is the most common way to provide services.
+- Components first request dependencies from the ElementInjector, then move up the hierarchy if not found.
+- The NullInjector serves as a fallback to throw errors when no provider is found.
+
