@@ -1155,6 +1155,14 @@ Therefore the real place to stop the evaluation of a component is the place *whe
 - Without inputs or Signals, OnPush components may not update as expected.
 - Understanding Angular's change detection triggers is essential for cross-component data synchronization.
 
+### 204. Introducing The async Pipe
+
+#### Using the Async Pipe in the Template
+In the template, you use the messages property followed by the special async pipe. This built-in pipe is designed to be used with observables, which is the main offering of the RxJS package. The BehaviorSubject used here is also a kind of observable.
+
+Behind the scenes, when using the async pipe, Angular sets up a subscription, reads the values emitted by the subject, and provides them in the template so that constructs like the *ngFor loop continue to work. It also automatically unsubscribes if the component is no longer active.
+
+Additionally, the async pipe triggers change detection for the component whenever a new value is received from the subject or observable. This ensures the UI updates accordingly without manual intervention.
 
 
 
