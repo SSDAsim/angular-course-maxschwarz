@@ -1212,3 +1212,26 @@ export class AppComponent implements OnInit {
 
 // this clean up is what you will always want to do with obserables no matter how they are created. 
 ```
+
+
+### 209. Working with RxJS Operators
+
+#### Operators 
+
+**Operators** are functions you can `pipe` into your *observable data stream* to perform transformations or other operations on the observable values. They take each value emitted by the observable, do some operation on the value and then return the value to the subscription which then return the value to the *observer* i.e. *next()* in most cases.
+
+```typescript
+import { interval, map } from 'rxjs';
+
+ngOnInit() : void {
+  const subscription = interval(1000).pipe(
+    map((val) => val * 2)
+  ).subscribe({
+    next: (val) => console.log(val),
+  });
+
+  this.destroyRef.onDestroy(() => {
+    subscription.unsubscribe();
+  });
+}
+```
