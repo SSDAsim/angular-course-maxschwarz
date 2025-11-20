@@ -1,7 +1,11 @@
 <app-places-container title="Available Places">
   
-  @if(isLoading()){
-    <p class="fallback-text">Hang in there! We are loading images for you.</p>
+  @if(isLoading() && !error()){
+    <p class="fallback-text">Hang in there! We are fetching available places for you.</p>
+  }
+
+  @if(error()){
+    <p class="fallback-text">{{ error() }}</p>
   }
   
   @if (places()) {
