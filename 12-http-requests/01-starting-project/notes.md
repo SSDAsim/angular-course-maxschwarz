@@ -1304,3 +1304,16 @@ import { provideHttpClient } from '@angular/common/http';
 })
 export class AppModule {}
 ```
+
+
+### 222. Sending a GET Request To Fetch Data
+
+```typescript 
+ngOnInit() {
+  this.httpClient.get<{places: Place[]}>('http://localhost:3000/places').subscribe({
+    next: (resData) => {
+      console.log(resData.places);
+    }
+  })
+}
+```
