@@ -1278,3 +1278,29 @@ export class AvailablePlacesComponent {
   private httpClient = inject(HttpClient);
 }
 ```
+
+### 221. Providing the HttpClient when using NgModules
+
+Modern Angular apps typically use standalone components, not `NgModules`. But many Angular projects DO still use this "older approach".
+
+Therefore, it's important to understand how you can provide Angular's `HttpClient` when working with `NgModules`.
+
+Thankfully, it's pretty straightforward. Instead of providing the http client via *provideHttpClient()* passed to *bootstrapApplication()*, you pass it to the providers array of your root NgModule:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
+ 
+@NgModule({
+  declarations: [
+    AppComponent,
+    PlacesComponent,
+    // ... etc
+  ],
+  imports: [BrowserModule, FormsModule],
+  providers: [provideHttpClient()],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
