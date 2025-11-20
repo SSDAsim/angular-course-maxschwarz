@@ -1169,3 +1169,46 @@ Additionally, the async pipe triggers change detection for the component wheneve
 - Observables are not specific to Angular but are introduced by the RxJS Library.
 - an *observable* is an object that produces and controls a stream of data.
 - RxJS Observables emit values over time - you can set up subscriptions to handle them.
+
+
+### 208. Creating & Using an Observable
+
+#### Subscribing to Observables
+Subscribing is necessary to start the observable. By default, calling interval does nothing unless there is at least one subscriber. Internally, RxJS optimizes by not emitting values if no one is listening. The subscribe method takes an observer object that can implement up to three methods:
+
+- next: Called for every new emitted value, receiving the value as a parameter.
+- complete: Called when the observable finishes emitting values, if applicable.
+- error: Called if an error occurs during emission.
+In the case of interval, it keeps emitting values indefinitely, so the complete method might never be called.
+
+```typescript
+ngOnInit() : void {
+  interval(1000).subscribe({
+    next: (val) => console.log(val), // will be called after every emitted value, recieving the value as parameter
+    complete: () => {}, // will be called when observable is done emitting values
+    error: () => {}, // will be called if there is an error in observable
+  })
+}
+```
+
+#### Cleaning Up Subscriptions
+
+It is important to clean up the subscription when the component is about to be destroyed in order to avoid memory leaks and subscriptions running in the  background. This is done using `DestroyRef`. 
+
+```typescript
+export class AppComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
+
+  ngOnInit() : void {
+    const subscription = interval(1000).subscribe({
+      next: (val) => console.log(val),
+    });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }  
+}
+
+// this clean up is what you will always want to do with obserables no matter how they are created. 
+```
