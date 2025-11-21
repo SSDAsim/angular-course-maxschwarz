@@ -1361,7 +1361,7 @@ bootstrapApplication(AppComponent, {
 
 ### 238. Introducing HTTP Response Interceptors
 
-`return next(request);` in the interceptor return an obseravble, you can call `pipe()` on it but you can not call `subscribe()` on it because that will be the end of this request. 
+You can build on reuqest interceptor to also intercept the responses. `return next(request);` in the interceptor return an obseravble, you can call `pipe()` on it but you can not call `subscribe()` on it because that will be the end of this request. 
 
 #### setup a reponse interceptor on request
 
