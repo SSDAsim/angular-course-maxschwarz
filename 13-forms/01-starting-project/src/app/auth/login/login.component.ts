@@ -12,19 +12,31 @@ import { debounceTime } from 'rxjs';
 export class LoginComponent {
   private destroyRef = inject(DestroyRef);
 
-  // in order to store the value of the email so user does not has to enter the email again 
-  // get hold of the form element 
   private form = viewChild.required<NgForm>('form');
-
-  /* the form will be rendered after the component has fully initialized, */
   constructor() {
-    /* Register a callback to be invoked the next time the application finishes rendering */
     afterNextRender(() => {
+      /* get the email of the user */
+      const savedForm = window.localStorage.getItem('saved-login-form');
+
+      if(savedForm) {
+        const loadedFormData = JSON.parse(savedForm);
+        const savedEmail = loadedFormData.email;
+
+        // this.form().setValue({
+        //   email: savedEmail, 
+        //   password: ''
+        // });
+
+        // alternatively 
+        // wait for the form to be fully initialized
+        setTimeout(() => {
+          this.form().controls['email'].setValue(savedEmail);
+        }, 1);
+      }
+
       const subscription = this.form().valueChanges?.pipe(debounceTime(500)).subscribe({
         next: (value) => window.localStorage.setItem('saved-login-form', JSON.stringify({ email: value.email }))
       });
-      /* this observable will emit new value everytime the value of the form changes (i.e. with every key stroke) */
-      /* debounceTime(500) keep the value only if there's a break of 500ms */
 
       this.destroyRef.onDestroy(() => subscription?.unsubscribe());
     });
