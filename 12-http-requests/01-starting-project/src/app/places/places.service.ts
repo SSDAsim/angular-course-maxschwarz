@@ -54,7 +54,26 @@ export class PlacesService {
     );
   }
 
-  removeUserPlace(place: Place) {}
+  removeUserPlace(place: Place) {
+    // copy as fallback 
+    const prevPlaces = this.userPlaces();
+
+    // check if the selected place is the part of the user places
+    // remove the place if it is the part of the array
+    if(prevPlaces.some((p) => p.id === place.id)){
+      this.userPlaces.set(prevPlaces.filter((p) => p.id !== place.id));
+    }
+    // filter() will iterate over the array elements and keep the element if the condition inside the paranthesis is false 
+    
+    return this.httpClient.delete('http://localhost:3000/user-places/' + place.id)
+      .pipe(
+        catchError((error) => {
+          this.userPlaces.set(prevPlaces);
+          this.errorService.showError('Failed to remove the place.')
+          return throwError(() => new Error('Failed to remove the place.'));
+        })
+      )
+  }
 
   private fetchPlaces(url: string, errorMessage: string) {
     return this.httpClient.get<{places: Place[]}>(url)
