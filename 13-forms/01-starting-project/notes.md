@@ -1385,4 +1385,25 @@ return next(request).pipe(
 - Template Driven Forms
 - Reactive Forms
 
+### 244. Validating Input with Form Validation Directives
+
+ Adding 'required' and other attributes to HTML elements will no longer work as expected and the control will be given to the angular.
+If you break any attribute, for example submit form with empty value while there is required attribute is on the tag, then the angular will submit the form but mark it as `invalid`. So the browser will no longer validate the attributes such as 'required' and 'minlength="8"'
+
+```html
+<input id="email" type="email" name="email" required ngModel />
+
+<input id="password" type="password" name="password" required minlength="6" ngModel />
+```
+
+and you can simply return the form if it is invalid:
+```typescript
+onSubmitForm(formData: NgForm){
+  if(formData.form.invalid){
+    return ;
+  }
+
+  //... some other code
+}
+```
 
