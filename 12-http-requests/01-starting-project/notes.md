@@ -1331,3 +1331,30 @@ onSelectPlace(selectedPlace: Place){
   });
 }
 ```
+
+### 236. Introducing HTTP Interceptors
+
+Interceptors are special functions that will be executed when an HTTP request is about to be sent or when a response arrives. It's a function and not a class.  
+Using *HTTP Interceptors*, we can manipulate a request. 
+
+```main.ts
+import { HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http'
+
+// register an http interceptor
+function loggingInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn){
+    const req = request.clone({
+        headers: request.headers.set('X-DEBUG', 'TESTING')
+    })
+    console.log('[Outgoing Request]');
+    console.log(request);
+    // return next(req); 
+    return next(request); // pass the intercepted request (i.e. intercepted request will continue)
+    /* original request can't be mutated but you can clone it to mutate the clone and forward it instead of original request */
+}
+
+bootstrapApplication(AppComponent, {
+    providers: [provideHttpClient(
+        withInterceptors([loggingInterceptor])
+    )]
+}).catch((err) => console.error(err));
+```
