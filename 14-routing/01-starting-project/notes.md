@@ -1681,3 +1681,28 @@ and in the navigation element
 ```html
 <a [routerLink]="['/users', user().id]" routerLinkActive="selected">
 ```
+
+### 272. Extracting Dynamic Route Parameters via Inputs
+
+#### Easiest Way:
+- define an input in the component this is loaded for the dynamic route with the same name as in the route parameter (e.g. userId).
+```typescript
+export class UserTasksComponent {
+  userId = input.required<string>();
+}
+```
+- then add `withComponentInputBinding()` to configuration object 
+```typescript
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes, withComponentInputBinding())],
+}
+```
+- this will set the value of the input in the component file and you can use that parameter value in the component's template
+```typescript
+export class UserTasksComponent {
+  userId = input.required<string>();
+  private usersServices = inject(UsersService);
+
+  userName = computed(() => this.usersServices.users.find((u) => u.id === this.userId())?.name);
+}
+```
