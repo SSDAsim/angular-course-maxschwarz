@@ -148,6 +148,10 @@
     </div>
   </div>
 
+  @if (form.touched && form.invalid){
+    <p class="control-error">Your form is invalid. Please try again.</p>
+  }
+
   <p class="form-actions">
     <button type="reset" class="button button-flat" (click)="onReset()">Reset</button>
     <button type="submit" class="button">Sign up</button>
