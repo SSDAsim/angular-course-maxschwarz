@@ -1666,3 +1666,18 @@ Angular offers `routerLinkActive` directive that applies the specified CSS class
 ```typescript
 <a routerLink="/tasks" routerLinkActive="selected">
 ```
+
+### 271. Setting Up & Navigating To Dynamic Routes
+
+```typescript
+{
+  path: 'users/:userId', //<domain>/users/<uid>
+  component: UserTasksComponent,
+},
+
+// in /:userId, ':' tells the angular that this will be dynamic value
+```
+and in the navigation element 
+```html
+<a [routerLink]="['/users', user().id]" routerLinkActive="selected">
+```
