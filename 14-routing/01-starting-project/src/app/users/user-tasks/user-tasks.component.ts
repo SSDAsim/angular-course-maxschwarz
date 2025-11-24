@@ -1,5 +1,6 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-tasks',
@@ -7,9 +8,27 @@ import { UsersService } from '../users.service';
   templateUrl: './user-tasks.component.html',
   styleUrl: './user-tasks.component.css',
 })
-export class UserTasksComponent {
-  userId = input.required<string>();
-  private usersServices = inject(UsersService);
+export class UserTasksComponent implements OnInit {
+  // userId = input.required<string>();
 
-  userName = computed(() => this.usersServices.users.find((u) => u.id === this.userId())?.name);
+  private destroyRef = inject(DestroyRef);
+  userName = '';
+  private usersServices = inject(UsersService);
+  private activatedRoute = inject(ActivatedRoute);
+
+  // userName = computed(() => this.usersServices.users.find((u) => u.id === this.userId())?.name);
+
+  ngOnInit(): void {
+    console.log(this.activatedRoute);
+    const subscription = this.activatedRoute.paramMap.subscribe({
+      next: (paramMap) => {
+        this.userName = this.usersServices.users.find((u) => u.id === paramMap.get('userId'))?.name || '';
+      }
+    });
+
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
+    // why subscription? ngOnInit will NOT be executed again and again. Hence a subscription is required to be notified about changes. And modify the data that depends on it.
+  }
 }
+

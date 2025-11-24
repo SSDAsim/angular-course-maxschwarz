@@ -1706,3 +1706,42 @@ export class UserTasksComponent {
   userName = computed(() => this.usersServices.users.find((u) => u.id === this.userId())?.name);
 }
 ```
+This approach might do not work in older versions of Angular.
+
+### 274. Extracting Dynamic Route Parameters via Observables
+
+`ActivatedRoute` provides various properties that hold information about the route activated by the Angular router. Inject it into you component like this
+```typescript
+private activatedRoute = inject(ActivatedRoute);
+
+ngOnInit(): void {
+  console.log(this.activatedRoute);
+}
+```
+
+`paramMap` contains key => value pairs where they keys are our url paramters and the values are dynamic. For example, *key* will be *userId* and *value* will be *u1*, *u2* and *u3* etc.
+```typescript
+export class UserTasksComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
+  userName = '';
+  private usersServices = inject(UsersService);
+  private activatedRoute = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    console.log(this.activatedRoute);
+    const subscription = this.activatedRoute.paramMap.subscribe({
+      next: (paramMap) => {
+        this.userName = this.usersServices.users.find((u) => u.id === paramMap.get('userId'))?.name || '';
+      }
+    });
+
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
+    // why subscription? ngOnInit will NOT be executed again and again. Hence a subscription is required to be notified about changes. And modify the data that depends on it.
+  }
+}
+```
+
+With this approach and using a *console.log()* statement you can see that the whole component will not be rendered again and again but only the changes will be rendered.
+
+
