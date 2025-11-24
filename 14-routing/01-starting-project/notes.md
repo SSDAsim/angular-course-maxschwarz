@@ -1640,3 +1640,21 @@ import { appConfig } from './app/app.config';
 
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
 ```
+
+### 269. Adding Links The Right Way
+
+Redirecting to the pages using anchor tags is a good approach but it cause the reloading of the whole page. Whenever you are directed to some page through `<a>` tag, it reloads the whole page evertime user click on the anchor tag link which might affect the performance.
+
+```html
+<a href="/tasks">
+<!-- this approad will affect the application performance -->
+```
+
+#### routerLink Directive
+
+Angular provides `routerLink` directive to handle navigation. It sets up the path for the link. Angular intercepts the default browser behavior, preventing the refetching of HTML elements. It then examines the path, consults the route configuration, and loads the appropriate component without leaving the single page application context. This is the purpose of RouterLink.
+
+```html
+<a routerLink="/tasks">
+<!-- since it is a directive,  you need to import the directive in the component.ts file -->
+```
