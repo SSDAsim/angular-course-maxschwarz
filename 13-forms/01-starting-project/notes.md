@@ -1535,3 +1535,37 @@ In template file, you'll have to give parent element the name of the `formArray`
 </fieldset>
 ```
 
+### 261. Creating Multi-Input Validators / Form Group Validators
+
+To setup a combined validator, place the controls to be checked together into the form group. The form group takes a **Configuration Object** as a second argument where you can register validators that will run for overall group. A *form group* is also a form control that consists of many form controls.
+
+```typescript
+// register a validator outside the component @ decorator 
+function equalCheck(controlName1: string, controlName2: string){
+
+  return (control: AbstractControl) => {
+    // retrieve the values of the form controls
+    const val1 = control.get(controlName1)?.value;
+    const val2 = control.get(controlName2)?.value;
+
+    if(val1 === val2) {
+      return null; 
+    }
+
+    return { passwordsNotEqual: true };
+  }
+}
+
+// then in the combined form group 
+passwords: new FormGroup({
+  password: new FormControl('', {
+  validators: [Validators.required, Validators.minLength(6)]
+  }),
+  confirmPassword: new FormControl('', {
+    validators: [Validators.required, Validators.minLength(6)]
+  }),
+}, {
+  validators: [equalCheck('password', 'confirmPassword')]
+}
+),
+```
