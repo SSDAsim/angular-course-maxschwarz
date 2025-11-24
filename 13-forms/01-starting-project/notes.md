@@ -1444,3 +1444,73 @@ Now these CSS classes can be used to apply some styling to these elements.
 ### 254. Creating and Using Async Validators
 
 **Async Validators** is a function that receives a control as input and return observable. This allows us to perform async operation such as sending HTTP requests to backend to check whether an email address has already been registered
+
+```typescript
+// outside of component 
+// async validator to check if the email is already registered
+function emailIsUnique(control: AbstractControl) {
+  if(control.value !== 'test@example.com'){
+    // Email is unique
+    return of(null);
+  }
+
+  // Email is not unique  
+  // of() returns an observable that emits some data
+  return of( { notUnique: true });
+}
+
+// inside the component 
+form = new FormGroup({
+  email: new FormControl(initialEmailValue, {
+    validators: [Validators.required, Validators.email],
+    asyncValidators: [emailIsUnique],
+  }),
+  password: new FormControl('', {
+    validators: [Validators.required, Validators.minLength(6), mustContainQuestionMark]
+  })
+});
+
+```
+
+### 259. Working with Nested Form Groups
+
+Sometimes you have similar nested elements such as password and confirm password and it is easier to nest the logic. That's why we use Nested Form Groups. To implement that we have to make 
+- a *form group* in the component class
+- enclose the controls inside the form groups
+- link that control with the parent element or parent div that encloses those elements in the template file
+
+```typescript 
+password: new FormGroup({
+  password: new FormControl('', {
+  validators: [Validators.required, Validators.minLength(6)]
+  }),
+  confirmPassword: new FormControl('', {
+    validators: [Validators.required, Validators.minLength(6)]
+  }),
+}),
+```
+
+```html
+<!-- you can also write formGroup="form.control.password" instead of formGroupName="password" -->
+<div class="control-row" formGroupName="password">
+  <div class="control">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      formControlName="password"
+    />
+  </div>
+
+  <div class="control">
+    <label for="confirm-password">Confirm Password</label>
+    <input
+      id="confirm-password"
+      type="password"
+      name="confirm-password"
+      formControlName="confirmPassword"
+    />
+  </div>
+</div>
+```
