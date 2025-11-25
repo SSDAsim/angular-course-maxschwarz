@@ -18,6 +18,7 @@ export class NewTaskComponent {
   enteredDate = signal('');
   private tasksService = inject(TasksService);
   private router = inject(Router);
+  submitted = false;
 
   onSubmit() {
     this.tasksService.addTask(
@@ -28,6 +29,7 @@ export class NewTaskComponent {
       },
       this.userId()
     );
+    this.submitted = true;
 
     this.router.navigate(['/users', this.userId(), 'tasks'], {
       replaceUrl: true, // make sure the user can not come back to old form submission by cilcking back button in browser
@@ -36,9 +38,12 @@ export class NewTaskComponent {
 }
 
 export const canLeaveEditPage: CanDeactivateFn<NewTaskComponent> = (component) => {
+    if(component.submitted) {
+      return true;
+    }
     if (component.enteredTitle() || component.enteredDate() || component.enteredSummary()){
       return window.confirm('Do you really want to leave the page? You will lose your data');
     }
 
-    return true
+    return true;
 };
