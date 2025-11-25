@@ -1844,9 +1844,6 @@ You can pass data to the route and that data can be accessed in the component as
   data: {
       message: 'Hello',
   },
-  resolver: {
-    userName: resolveUserName,
-  }
 },
 ```
 Now this `message` can be accessed in the component as 
