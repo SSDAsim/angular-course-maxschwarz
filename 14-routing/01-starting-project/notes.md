@@ -1843,6 +1843,9 @@ You can pass data to the route and that data can be accessed in the component as
   children: userRoutes,
   data: {
       message: 'Hello',
+  },
+  resolver: {
+    userName: resolveUserName,
   }
 },
 ```
