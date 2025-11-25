@@ -1790,7 +1790,7 @@ export const appConfig: ApplicationConfig = {
 
 `withRouterConfig({ paramsInheritanceStrategy: 'always', })` This setting ensure that dynamic path parameter values are injected into child routes. Now you will have access to userId in the components that are linked to child routes. 
 
-###   
+### 279. Link Shortcuts & Programmatic Navigation
 
 ```html
 <a routerLink="../">Cancel</a>
