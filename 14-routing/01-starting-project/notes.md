@@ -1830,3 +1830,26 @@ children: [
   },
 ]
 ```
+
+### 288. Adding Static Data To Routes
+
+You can pass data to the route and that data can be accessed in the component as *input*. 
+
+```typescript
+// the routes file
+{
+  path: 'users/:userId', //<domain>/users/<uid>
+  component: UserTasksComponent,
+  children: userRoutes,
+  data: {
+      message: 'Hello',
+  }
+},
+```
+Now this `message` can be accessed in the component as 
+
+```typescript
+message = input.required<string>();
+
+console.log("Input message " + this.message());
+```
