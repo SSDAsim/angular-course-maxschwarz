@@ -1882,3 +1882,36 @@ The default behavior of the Angular is that the *resolver functions* will only b
   },
 },
 ```
+
+### 294. Introducing Route Guards
+
+A **Route Guard** is a class that checks whether a certain navigation action should be permitted or not. This ultimately controls the access to the route.    
+`canMatch` guard allows you to control whether this entire route should be matched by a certain navigation action or not. In other words, whether some path entered into the URL should match this route.
+
+```typescript
+{
+    path: 'users/:userId', //<domain>/users/<uid>
+    component: UserTasksComponent,
+    children: userRoutes,
+    canMatch: [dummyCanMatch],
+    data: {
+        message: 'Hello',
+    },
+    resolve: {
+        userName: resolveUserName,
+    }, 
+    title: resolveTitle
+},
+```
+And then define the guard function anywhere in that file
+
+```typescript
+const dummyCanMatch: CanMatchFn = (route, segments) => {
+  const router = inject(Router);
+  const shoudlGetAccess = Math.random();
+  if(shoudlGetAccess < 0.5){
+    return true;
+  }
+  return new RedirectCommand(router.parseUrl('/unauthorized'));
+};
+```
