@@ -1,7 +1,7 @@
 import { CanMatchFn, RedirectCommand, Router, Routes } from '@angular/router';
 import { inject } from '@angular/core';
 
-import { routes as userRoutes } from './users/users.routes';
+// import { routes as userRoutes } from './users/users.routes'; // eager loads the user routes
 import { NoTaskComponent } from './tasks/no-task/no-task.component';
 import {
   UserTasksComponent,
@@ -30,7 +30,8 @@ export const routes: Routes = [
   {
     path: 'users/:userId', // <your-domain>/users/<uid>
     component: UserTasksComponent,
-    children: userRoutes,
+    // children: userRoutes, // eager load
+    loadChildren: () => import('./users/users.routes').then((mod) => mod.routes), // lazy load
     canMatch: [dummyCanMatch],
     data: {
       message: 'Hello!',
