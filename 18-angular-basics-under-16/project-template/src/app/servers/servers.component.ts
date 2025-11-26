@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-servers', // works as a tag selector 
   // selector: '[app-server]', // attribute selector -> <di app-servers></div>
@@ -12,7 +13,7 @@ import { Component } from '@angular/core';
 export class ServersComponent {
   allowNewServer = false;
   serverCreationStatus = 'No server was created.'
-  serverName = '';
+  serverName = 'New Server Name';
 
   constructor() {
     setTimeout(() => {
