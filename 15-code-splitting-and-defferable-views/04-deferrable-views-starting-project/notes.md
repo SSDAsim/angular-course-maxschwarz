@@ -1920,7 +1920,7 @@ const dummyCanMatch: CanMatchFn = (route, segments) => {
 
 ### 302. Implementing Route-based Lazy Loading
 
-Lazy loading simply means *do not load all the code at once* rather *load the code when needed*. User might does not want to see tasks of all users so it makes no sense to load the code of fetching all the tasks at once. when we use `import { ... } from '...';` statements, we are actually doing *eager loading*. To implement *Lazy Loadin* using *route*:
+Lazy loading simply means *do not load all the code at once* rather *load the code when needed*. User might does not want to see tasks of all users so it makes no sense to load the code of fetching all the tasks at once. when we use `import { ... } from '...';` statements, we are actually doing *eager loading*. To implement *Lazy Loading* using *route*:
 ```typescript
 {
   path: 'tasks', // <your-domain>/users/<uid>/tasks
@@ -1931,4 +1931,18 @@ Lazy loading simply means *do not load all the code at once* rather *load the co
     userTasks: resolveUserTasks,
   },
 },
+```
+
+### 307. Defer Loading Until Viewport Visibility
+
+By default, without any configuration, `@Defer` will make Angular load the component and its related code lazily once the browser enters the idle state. The defer allows configuration to specify when exactly the component will be loaded. For example, you can add a trigger by using `on` followed by the trigger name you want to. 
+
+```html
+@defer(on viewport) {
+  <app-offer-preview />
+} @placeholder {
+  <p>We might have an offer......</p>
+}
+
+<!-- on viewport ensures that the component can only be loaded if it is in viewport, meaning the user can see it. -->
 ```
